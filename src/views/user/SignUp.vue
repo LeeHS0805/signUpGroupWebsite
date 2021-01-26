@@ -124,7 +124,11 @@
                     }
                     const {data: {code, message}} = await this.$axios.post('/post', stdData)
                     if (code === '0000') {
-                        this.$Message.success("提交成功!");
+                        this.$Message({
+                            type: "success",
+                            message: "提交成功!",
+                            duration: "700"
+                        });
                     } else {
                         this.$Message.error(message);
                     }

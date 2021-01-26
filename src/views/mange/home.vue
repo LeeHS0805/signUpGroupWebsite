@@ -32,7 +32,7 @@
                             :collapse="isCollapsed"
                             :collapse-transition="false"
                             :router="true">
-                        <el-submenu  v-for="(item,index) in menuList" :key="index" :index="index.toString()">
+                        <el-submenu v-for="(item,index) in menuList" :key="index" :index="index.toString()">
                             <template slot="title">
                                 <i class="el-icon-location"></i>
                                 <span>{{item.authName}}</span>
@@ -70,11 +70,11 @@
                 date: new Date(),
                 menuList: [
                     {
-                        authName:'管理',
-                        children:[
+                        authName: '管理',
+                        children: [
                             {
-                                name:'学生信息',
-                                path:'stuInfo'
+                                name: '学生信息',
+                                path: 'stuInfo'
                             }
                         ]
                     }
@@ -150,28 +150,28 @@
     }
 
     .el-head-container {
-        height: 60px;
         display: inline;
+        height: 60px;
 
         .el-header {
-            background-color: #373d41;
             position: fixed;
             width: 100vw;
             line-height: 60px;
+            background-color: #373d41;
             color: white;
             font-size: 16px;
             font-weight: 500;
             letter-spacing: 2px;
 
             .header_icon {
-                width: 200px;
-                height: 60px;
                 display: inline-block;
+                height: 60px;
+                width: 200px;
 
                 img {
-                    width: 35px;
-                    height: 35px;
                     position: relative;
+                    height: 35px;
+                    width: 35px;
                     transform: translateY(30%);
                 }
 
@@ -213,8 +213,8 @@
         .el-aside {
             position: relative;
             height: calc(100vh - 60px);
-            background-color: rgba(80, 95, 130);
             overflow: hidden;
+            background-color: rgba(80, 95, 130);
 
             .toggle-button {
                 padding: 15px;
@@ -230,18 +230,18 @@
                 span.span {
                     display: inline-block;
                     position: relative;
-                    transform: rotate(90deg);
                     top: 4px;
+                    transform: rotate(90deg);
                 }
             }
 
             .toggle-button span:hover {
                 display: inline-block;
-                color: rgb(255, 208, 70);
                 position: relative;
                 transform: rotate(90deg);
                 transition: .5s all ease-in-out;
                 top: 4px;
+                color: rgb(255, 208, 70);
             }
 
             .el-menu {
@@ -251,8 +251,8 @@
     }
 
     .el-main {
-        margin-top: 60px;
         width: 100%;
+        margin-top: 60px;
         background-color: #eaedf1;
     }
 </style>

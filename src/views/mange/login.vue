@@ -72,7 +72,6 @@
                     if (isRight) {
                         const loadingInstance = Loading.service({fullscreen: true})
                         const loginMsg = await this.$axios.post('/login', this.loginForm)
-                        console.log(loginMsg)
                         loadingInstance.close()
                         let {code, message, data: {token}} = loginMsg.data
                         if (code === '0000') {

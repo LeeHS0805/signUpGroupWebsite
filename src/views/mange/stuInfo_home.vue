@@ -36,7 +36,7 @@
                                  align="center"></el-table-column>
                 <el-table-column prop="secondWill.branch" label="部门" sortable min-width="120" max-width="140"
                                  align="center"></el-table-column>
-                <el-table-column prop="firstWill.reason" label="理由" sortable min-width="220" max-width="250"
+                <el-table-column prop="secondWill.reason" label="理由" sortable min-width="220" max-width="250"
                                  align="center"></el-table-column>
                 <el-table-column prop="isDispensing" label="调剂" sortable min-width="80" max-width="90"
                                  align="center"></el-table-column>
@@ -55,11 +55,11 @@
             <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
-                    :current-page="currentPage"
-                    :page-sizes="[5,10, 20, 30, 50]"
+                    :current-page="queryInfo.page"
+                    :page-sizes="[1,5,10, 20, 30, 50]"
                     :page-size="queryInfo.pageSize"
                     layout="total, sizes, prev, pager, next, jumper"
-                    :total="total">
+                    :total="this.queryInfo.total">
             </el-pagination>
 
             <!--            修改用户信息对话框-->
@@ -128,10 +128,9 @@
                 queryInfo: {
                     query: '',
                     page: 1,
-                    pageSize: 5
+                    pageSize: 5,
+                    total: 0,
                 },
-                total: 0,
-                currentPage: 1,
                 dialogVisible: false,
                 editdialogVisible: false
             }
@@ -154,7 +153,7 @@
             async getUserListByKeyword() {
                 const data = {
                     token: sessionStorage.getItem('login'),
-                    keyword: this.keyword
+                    keyWord: this.keyword
                 }
                 const {data: {code, message, data: {total, students}}} = await this.$axios.post(`/getStuInfo?page=${this.queryInfo.page}&pageSize=${this.queryInfo.pageSize}`, data)
                 if (code !== '0000') {
@@ -182,14 +181,13 @@
                             branch: this.editData.secondWill[1],
                             reason: this.editData.secondReason ? this.editData.secondReason : ' ',
                         },
-                        isDispensing: this.editData.isDispensing
+                        isDispensing: Boolean(this.editData.isDispensing)
                     }
                     const {data: {code, message}} = await this.$axios.post('/post', stdData)
                     if (code === '0000') {
                         this.$Message.success("提交成功!");
                         this.handleClose()
-                    }
-                    else {
+                    } else {
                         this.$Message.error(message);
                     }
                 }
@@ -206,14 +204,11 @@
                 }
                 if (!idReg.test(data.stdId)) {
                     return this.$Message.error('学号填错了哦');
-                }
-                else if (!nameReg.test(data.stdName)) {
+                } else if (!nameReg.test(data.stdName)) {
                     return this.$Message.error('姓名不合法');
-                }
-                else if (!phoneReg.test(data.stdPhone)) {
+                } else if (!phoneReg.test(data.stdPhone)) {
                     return this.$Message.error('电话号不合法');
-                }
-                else if (data.firstWill.length == 0 || data.secondWill.length == 0) {
+                } else if (data.firstWill.length == 0 || data.secondWill.length == 0) {
                     return this.$Message.error('未填选志愿');
                 }
                 return true
@@ -234,10 +229,12 @@
                 this.editData.secondReason = this.editData.secondWill.reason;
                 this.editData.firstWill = [this.editData.firstWill.organization, this.editData.firstWill.branch]
                 this.editData.secondWill = [this.editData.secondWill.organization, this.editData.secondWill.branch]
+                this.editData.isDispensing = Boolean(this.editData.isDispensing)
                 this.editdialogVisible = true
-                console.log(this.editData)
             },
             handleClose() {
+                if (this.keyword == '' || this.keyword == undefined) this.getUserList()
+                else this.getUserListByKeyword()
                 this.editdialogVisible = false
                 this.dialogVisible = false
             }
