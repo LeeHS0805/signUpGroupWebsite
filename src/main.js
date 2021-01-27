@@ -13,7 +13,7 @@ Vue.use(iView)
 Vue.use(ElementUI);
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
-axios.defaults.baseURL = 'http://119.3.13.230:8000/1'
+axios.defaults.baseURL = '127.0.0.1:8000'
 
 Vue.prototype.$Message=Message
 new Vue({

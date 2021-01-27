@@ -53,10 +53,10 @@
         data() {
             return {
                 editData: {
-                    stdId: '20202020',
-                    stdName: '李鑫磊',
-                    stdQQ: '504794559',
-                    stdPhone: '18920259090',
+                    stdId: undefined,
+                    stdName: undefined,
+                    stdQQ: undefined,
+                    stdPhone: undefined,
                     majorValue: undefined,
                     firstWill: [],
                     firstReason: undefined,

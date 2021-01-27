@@ -59,7 +59,7 @@
                     :page-sizes="[1,5,10, 20, 30, 50]"
                     :page-size="queryInfo.pageSize"
                     layout="total, sizes, prev, pager, next, jumper"
-                    :total="this.queryInfo.total">
+                    :total="queryInfo.total">
             </el-pagination>
 
             <!--            修改用户信息对话框-->
@@ -140,7 +140,7 @@
                 const token = {
                     token: sessionStorage.getItem('login')
                 }
-                const {data: {code, message, data: {total, students}}} = await this.$axios.post(`/getAllStuInfo?page=${this.queryInfo.page}&pageSize=${this.queryInfo.pageSize}`, token)
+                const {data: {code, message, data: {total,students}}} = await this.$axios.post(`/getAllStuInfo?page=${this.queryInfo.page}&pageSize=${this.queryInfo.pageSize}`, token)
                 if (code !== '0000') {
                     return this.$Message.error(message)
                 }
@@ -229,7 +229,7 @@
                 this.editData.secondReason = this.editData.secondWill.reason;
                 this.editData.firstWill = [this.editData.firstWill.organization, this.editData.firstWill.branch]
                 this.editData.secondWill = [this.editData.secondWill.organization, this.editData.secondWill.branch]
-                this.editData.isDispensing = Boolean(this.editData.isDispensing)
+                this.editData.isDispensing = this.strToBoolean(this.editData.isDispensing)
                 this.editdialogVisible = true
             },
             handleClose() {
@@ -237,6 +237,10 @@
                 else this.getUserListByKeyword()
                 this.editdialogVisible = false
                 this.dialogVisible = false
+            },
+            strToBoolean(str){
+                if(str=='true')return true
+                else return false
             }
         },
         created() {
